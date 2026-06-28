@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THREAD — About</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style2.css">
+<style>
+.about-hero{background:var(--ink);padding:90px 60px;max-width:100%;}
+.about-eyebrow{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+.about-title{font-family:var(--font-display);font-size:clamp(48px,7vw,96px);line-height:.9;color:var(--surface);margin-bottom:28px;}
+.about-lead{font-size:16px;color:#888;line-height:1.8;font-weight:300;max-width:600px;}
+.about-values{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;padding:60px 40px;}
+.val-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;}
+.val-icon{font-size:36px;margin-bottom:16px;}
+.val-card h3{font-size:17px;font-weight:600;margin-bottom:10px;}
+.val-card p{font-size:14px;color:var(--muted);line-height:1.75;}
+.team-section{padding:60px 40px;background:var(--surface);border-top:1px solid var(--border);}
+.team-section h2{font-family:var(--font-display);font-size:48px;margin-bottom:40px;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:24px;}
+.team-card{text-align:center;}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#8b6914);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.team-card h4{font-size:14px;font-weight:600;margin-bottom:4px;}
+.team-card p{font-size:12px;color:var(--muted);}
+.contact-section{padding:60px 40px;text-align:center;}
+.contact-section h2{font-family:var(--font-display);font-size:48px;margin-bottom:12px;}
+.contact-section p{color:var(--muted);margin-bottom:24px;}
+</style>
+</head>
+<body>
+<!-- TOP BAR -->
+<div class="topbar">
+  Free shipping on orders over $100 &nbsp;·&nbsp; Code <strong>THREAD20</strong> for 20% off &nbsp;·&nbsp;
+  <a href="products.html">Shop now →</a>
+</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="home.html" class="nav-logo">THRE<span>A</span>D</a>
+  <div class="nav-links">
+    <a href="home.html"     data-p="home">Home</a>
+    <a href="products.html" data-p="products">Products</a>
+    <a href="about.html"    data-p="about">About</a>
+    <a href="others.html"   data-p="others">Others</a>
+    <a href="login.html"    data-p="login">Login</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:14px"></i>
+      <input type="text" placeholder="Search..." onkeydown="if(event.key==='Enter')window.location='products.html?q='+this.value">
+    </div>
+    <button class="btn-icon" onclick="window.location='cart.html'" title="Cart">
+      <i class="fa-solid fa-bag-shopping" style="font-size:16px"></i>
+      <span class="dot" id="cartDot"></span>
+    </button>
+    <a href="login.html"><button class="btn-login">Login</button></a>
+  </div>
+</nav>
+<script>
+  // highlight active nav link
+  const p = window.location.pathname.split('/').pop().replace('.html','');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    if(a.dataset.p === p) a.classList.add('active');
+  });
+  // show cart dot if cart has items
+  const c = JSON.parse(localStorage.getItem('thread_cart')||'[]');
+  if(c.length) document.getElementById('cartDot').style.display='block';
+</script>
+<div class="about-hero">
+  <p class="about-eyebrow">Our Story</p>
+  <h1 class="about-title">Born on the Streets,<br>Built for Everyone.</h1>
+  <p class="about-lead">THREAD started in 2018 with one simple idea: great design shouldn't cost a fortune. We partner with independent artists worldwide to bring bold, wearable art directly to you — no middlemen, no markups.</p>
+</div>
+
+<div class="about-values">
+  <div class="val-card"><div class="val-icon">🎨</div><h3>50+ Artists</h3><p>We collaborate with independent designers from over 20 countries, giving their work a global stage.</p></div>
+  <div class="val-card"><div class="val-icon">♻️</div><h3>Sustainable</h3><p>100% organic cotton, water-based inks, and carbon-neutral shipping on every single order.</p></div>
+  <div class="val-card"><div class="val-icon">🚀</div><h3>Limited Drops</h3><p>Every design is limited to 500 pieces. Own something truly unique — once it's gone, it's gone forever.</p></div>
+  <div class="val-card"><div class="val-icon">💬</div><h3>Community First</h3><p>Join 40,000+ members who shape future designs through votes, polls, and direct feedback.</p></div>
+</div>
+
+<div class="team-section">
+  <h2>Our Team</h2>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-avatar">👨‍🎨</div><h4>H. Marady</h4><p>Founder & Creative Director</p></div>
+    <div class="team-card"><div class="team-avatar">👩‍💻</div><h4>Sara K.</h4><p>Head of Design</p></div>
+    <div class="team-card"><div class="team-avatar">👨‍💼</div><h4>James L.</h4><p>Operations Lead</p></div>
+    <div class="team-card"><div class="team-avatar">👩‍🎤</div><h4>Mia T.</h4><p>Artist Relations</p></div>
+  </div>
+</div>
+
+<div class="contact-section">
+  <h2>Get in Touch</h2>
+  <p>Questions, collabs, or just want to say hi?</p>
+  <a href="mailto:h.marady007@gmail.com"><button class="btn-primary">h.marady007@gmail.com</button></a>
+</div>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">THRE<span>A</span>D</div>
+      <p>Premium graphic tees for those who wear their story. New drops every month.</p>
+    </div>
+    <div class="footer-col"><h4>Shop</h4>
+      <a href="products.html">New Arrivals</a>
+      <a href="products.html">Graphic Tees</a>
+      <a href="products.html">Sale</a>
+    </div>
+    <div class="footer-col"><h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="others.html">Others</a>
+      <a href="mailto:h.marady007@gmail.com">Contact</a>
+    </div>
+    <div class="footer-col"><h4>Account</h4>
+      <a href="login.html">Login / Register</a>
+      <a href="cart.html">My Cart</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 THREAD. All rights reserved.</p>
+    <p><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  </div>
+</footer>
+</body></html>

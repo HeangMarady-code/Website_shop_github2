@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THREAD — Others</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style2.css">
+<style>
+.others-hero{background:var(--ink);padding:80px 60px;color:var(--surface);}
+.others-hero p.eyebrow{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.others-hero h1{font-family:var(--font-display);font-size:clamp(48px,7vw,90px);line-height:.9;margin-bottom:20px;}
+.others-hero p.sub{font-size:15px;color:#888;font-weight:300;max-width:500px;line-height:1.7;}
+.others-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;padding:60px 40px;}
+.other-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .25s,box-shadow .25s;cursor:pointer;}
+.other-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,.12);}
+.other-card-img{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);height:160px;display:flex;align-items:center;justify-content:center;font-size:56px;}
+.other-card-body{padding:20px 22px 24px;}
+.other-card-body h3{font-size:16px;font-weight:600;margin-bottom:8px;}
+.other-card-body p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;}
+.other-card-body a{font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;}
+.other-card-body a:hover{text-decoration:underline;}
+.faq-section{padding:60px 40px;max-width:800px;margin:0 auto;}
+.faq-section h2{font-family:var(--font-display);font-size:48px;margin-bottom:32px;}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0;}
+.faq-q{font-size:15px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.faq-q::after{content:'+';font-size:22px;color:var(--accent);transition:transform .2s;}
+.faq-item.open .faq-q::after{transform:rotate(45deg);}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;}
+.faq-item.open .faq-a{max-height:200px;padding-top:12px;}
+.newsletter{background:var(--ink);margin:0 40px 60px;border-radius:16px;padding:48px 56px;text-align:center;}
+.newsletter h2{font-family:var(--font-display);font-size:48px;color:var(--surface);margin-bottom:12px;}
+.newsletter p{color:#888;margin-bottom:28px;}
+.nl-form{display:flex;gap:10px;max-width:440px;margin:0 auto;}
+.nl-form input{flex:1;padding:13px 16px;border-radius:10px;border:1px solid #333;background:#1a1a1a;color:var(--surface);font-size:14px;outline:none;font-family:var(--font-body);}
+.nl-form input::placeholder{color:#555;}
+.nl-form input:focus{border-color:var(--accent);}
+</style>
+</head>
+<body>
+<!-- TOP BAR -->
+<div class="topbar">
+  Free shipping on orders over $100 &nbsp;·&nbsp; Code <strong>THREAD20</strong> for 20% off &nbsp;·&nbsp;
+  <a href="products.html">Shop now →</a>
+</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="home.html" class="nav-logo">THRE<span>A</span>D</a>
+  <div class="nav-links">
+    <a href="home.html"     data-p="home">Home</a>
+    <a href="products.html" data-p="products">Products</a>
+    <a href="about.html"    data-p="about">About</a>
+    <a href="others.html"   data-p="others">Others</a>
+    <a href="login.html"    data-p="login">Login</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:14px"></i>
+      <input type="text" placeholder="Search..." onkeydown="if(event.key==='Enter')window.location='products.html?q='+this.value">
+    </div>
+    <button class="btn-icon" onclick="window.location='cart.html'" title="Cart">
+      <i class="fa-solid fa-bag-shopping" style="font-size:16px"></i>
+      <span class="dot" id="cartDot"></span>
+    </button>
+    <a href="login.html"><button class="btn-login">Login</button></a>
+  </div>
+</nav>
+<script>
+  // highlight active nav link
+  const p = window.location.pathname.split('/').pop().replace('.html','');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    if(a.dataset.p === p) a.classList.add('active');
+  });
+  // show cart dot if cart has items
+  const c = JSON.parse(localStorage.getItem('thread_cart')||'[]');
+  if(c.length) document.getElementById('cartDot').style.display='block';
+</script>
+<div class="others-hero">
+  <p class="eyebrow">More from THREAD</p>
+  <h1>Everything<br>Else</h1>
+  <p class="sub">Shipping info, size guides, FAQs, gift cards, affiliate program, and more — all in one place.</p>
+</div>
+
+<div class="others-grid">
+  <div class="other-card">
+    <div class="other-card-img">📦</div>
+    <div class="other-card-body">
+      <h3>Shipping & Delivery</h3>
+      <p>Free shipping on orders over 00. Standard delivery 3–5 business days. Express available at checkout.</p>
+      <a href="#">Learn more →</a>
+    </div>
+  </div>
+  <div class="other-card">
+    <div class="other-card-img">📏</div>
+    <div class="other-card-body">
+      <h3>Size Guide</h3>
+      <p>Not sure what size to order? Our detailed size guide covers chest, length, and shoulder measurements for every fit.</p>
+      <a href="#">View size chart →</a>
+    </div>
+  </div>
+  <div class="other-card">
+    <div class="other-card-img">🔄</div>
+    <div class="other-card-body">
+      <h3>Returns & Exchanges</h3>
+      <p>Not happy? Return within 30 days for a full refund or exchange. No questions asked — we make it easy.</p>
+      <a href="#">Return policy →</a>
+    </div>
+  </div>
+  <div class="other-card">
+    <div class="other-card-img">🎁</div>
+    <div class="other-card-body">
+      <h3>Gift Cards</h3>
+      <p>Give the gift of style. Available in 5, 0, 00, and 00 denominations. Delivered instantly by email.</p>
+      <a href="#">Buy a gift card →</a>
+    </div>
+  </div>
+  <div class="other-card">
+    <div class="other-card-img">🤝</div>
+    <div class="other-card-body">
+      <h3>Affiliate Program</h3>
+      <p>Earn 15% commission on every sale you refer. Join 2,000+ affiliates already earning with THREAD.</p>
+      <a href="#">Join the program →</a>
+    </div>
+  </div>
+  <div class="other-card">
+    <div class="other-card-img">🎨</div>
+    <div class="other-card-body">
+      <h3>Custom Orders</h3>
+      <p>Want a custom design for your team, event, or brand? We handle bulk orders of 10+ pieces with full personalization.</p>
+      <a href="mailto:h.marady007@gmail.com">Contact us →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <h2>FAQ</h2>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How long does shipping take?</div>
+    <div class="faq-a">Standard shipping takes 3–5 business days within the US. International orders typically arrive in 7–14 business days depending on your location.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">What materials are your shirts made from?</div>
+    <div class="faq-a">All THREAD tees are made from 100% GOTS-certified organic cotton. We use water-based inks that are soft to the touch and last wash after wash.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Can I track my order?</div>
+    <div class="faq-a">Yes! Once your order ships, you'll receive an email with a tracking number. You can track it directly on our website or via the carrier's site.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Do you ship internationally?</div>
+    <div class="faq-a">We ship to over 60 countries worldwide. International shipping rates and times vary by destination. Import duties may apply depending on your country.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How do I care for my THREAD tee?</div>
+    <div class="faq-a">Machine wash cold, inside out, on a gentle cycle. Tumble dry low or hang to dry. Do not bleach. Iron on low heat if needed. Avoid direct ironing on the print.</div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>Stay in the Loop</h2>
+  <p>New drops, exclusive discounts, and early access — straight to your inbox.</p>
+  <div class="nl-form">
+    <input type="email" placeholder="Enter your email...">
+    <button class="btn-primary" onclick="showToast('Subscribed! 🎉')">Subscribe</button>
+  </div>
+</div>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">THRE<span>A</span>D</div>
+      <p>Premium graphic tees for those who wear their story. New drops every month.</p>
+    </div>
+    <div class="footer-col"><h4>Shop</h4>
+      <a href="products.html">New Arrivals</a>
+      <a href="products.html">Graphic Tees</a>
+      <a href="products.html">Sale</a>
+    </div>
+    <div class="footer-col"><h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="others.html">Others</a>
+      <a href="mailto:h.marady007@gmail.com">Contact</a>
+    </div>
+    <div class="footer-col"><h4>Account</h4>
+      <a href="login.html">Login / Register</a>
+      <a href="cart.html">My Cart</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 THREAD. All rights reserved.</p>
+    <p><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  </div>
+</footer>
+<script>
+function toggleFaq(el){
+  const item=el.closest('.faq-item');
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+function showToast(m){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';document.body.appendChild(t);}t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);}
+</script>
+</body></html>

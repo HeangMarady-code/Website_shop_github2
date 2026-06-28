@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THREAD — Products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style2.css">
+<style>
+.cat-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;gap:4px;overflow-x:auto;}
+.cat-bar::-webkit-scrollbar{display:none;}
+.cat-pill{padding:14px 18px;font-size:13px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s;text-transform:uppercase;letter-spacing:.06em;background:none;border-left:none;border-right:none;border-top:none;font-family:var(--font-body);}
+.cat-pill:hover,.cat-pill.active{color:var(--ink);border-bottom-color:var(--accent);}
+.cat-pill.active{font-weight:600;}
+.filter-row{display:flex;align-items:center;justify-content:space-between;padding:20px 40px 0;max-width:1400px;margin:0 auto;}
+.result-count{font-size:13px;color:var(--muted);}
+</style>
+</head>
+<body>
+<!-- TOP BAR -->
+<div class="topbar">
+  Free shipping on orders over $100 &nbsp;·&nbsp; Code <strong>THREAD20</strong> for 20% off &nbsp;·&nbsp;
+  <a href="products.html">Shop now →</a>
+</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="home.html" class="nav-logo">THRE<span>A</span>D</a>
+  <div class="nav-links">
+    <a href="home.html"     data-p="home">Home</a>
+    <a href="products.html" data-p="products">Products</a>
+    <a href="about.html"    data-p="about">About</a>
+    <a href="others.html"   data-p="others">Others</a>
+    <a href="login.html"    data-p="login">Login</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:14px"></i>
+      <input type="text" placeholder="Search..." onkeydown="if(event.key==='Enter')window.location='products.html?q='+this.value">
+    </div>
+    <button class="btn-icon" onclick="window.location='cart.html'" title="Cart">
+      <i class="fa-solid fa-bag-shopping" style="font-size:16px"></i>
+      <span class="dot" id="cartDot"></span>
+    </button>
+    <a href="login.html"><button class="btn-login">Login</button></a>
+  </div>
+</nav>
+<script>
+  // highlight active nav link
+  const p = window.location.pathname.split('/').pop().replace('.html','');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    if(a.dataset.p === p) a.classList.add('active');
+  });
+  // show cart dot if cart has items
+  const c = JSON.parse(localStorage.getItem('thread_cart')||'[]');
+  if(c.length) document.getElementById('cartDot').style.display='block';
+</script>
+<div class="page-header"><h1>All Products</h1><p>Discover our full collection</p></div>
+<div class="cat-bar" id="catBar">
+  <button class="cat-pill active" data-cat="all">All</button>
+  <button class="cat-pill" data-cat="graphic">Graphic Tees</button>
+  <button class="cat-pill" data-cat="oversized">Oversized</button>
+  <button class="cat-pill" data-cat="minimal">Minimal</button>
+  <button class="cat-pill" data-cat="limited">Limited Edition</button>
+  <button class="cat-pill" data-cat="sale">Sale</button>
+</div>
+<div class="filter-row"><span class="result-count" id="resultCount"></span></div>
+<div class="section-head" style="padding-top:20px"><h2 id="catTitle">All Products</h2></div>
+<div class="product-grid" id="products-grid"></div>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">THRE<span>A</span>D</div>
+      <p>Premium graphic tees for those who wear their story. New drops every month.</p>
+    </div>
+    <div class="footer-col"><h4>Shop</h4>
+      <a href="products.html">New Arrivals</a>
+      <a href="products.html">Graphic Tees</a>
+      <a href="products.html">Sale</a>
+    </div>
+    <div class="footer-col"><h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="others.html">Others</a>
+      <a href="mailto:h.marady007@gmail.com">Contact</a>
+    </div>
+    <div class="footer-col"><h4>Account</h4>
+      <a href="login.html">Login / Register</a>
+      <a href="cart.html">My Cart</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 THREAD. All rights reserved.</p>
+    <p><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  </div>
+</footer>
+<script>
+const products=[
+  {id:1,name:'Lion Tee I',cat:'graphic',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJT0HndVRQic7zKpVWG78-6ogeIz1Oe03NrQd60ucHgg&s=10',disc:70,sub:'Graphic Collection'},
+  {id:2,name:'Lion Tee II',cat:'oversized',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxE6bpOFti8bORR5hNptIESbxJnaxvuALiPAaPyjqHQ&s=10',disc:70,sub:'Oversized Fit'},
+  {id:3,name:'Lion Tee III',cat:'limited',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSG2z0S5MBSGfnbxgPGNcg9iDNVAefXVC6UEtu7K_DJw&s=10',disc:70,sub:'Limited Edition'},
+  {id:4,name:'Lion Tee IV',cat:'oversized',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6xZMTv5A-dpk2JzEcUPCZ85QnXP7zfkIgnenPrzaN7g&s=10',disc:70,sub:'Oversized Fit'},
+  {id:5,name:'Lion Tee V',cat:'minimal',price:168,old:0,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTknnBrgAansaVcF7JvtiY2VUM--SypBtCMrY59Sepg&s=10',disc:0,sub:'Minimal Series'},
+  {id:6,name:'Lion Tee VI',cat:'graphic',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJqr_jFscUBQqESc16KB8LZdGMfSxuqqMpFq71K2Xgig&s=10',disc:70,sub:'Graphic Collection'},
+  {id:7,name:'Lion Tee VII',cat:'limited',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScG0NHfjmg2W7Va1eTPHz64HzXFU8l_N7weYatFinc4Q&s=10',disc:70,sub:'Limited Edition'},
+  {id:8,name:'Lion Tee VIII',cat:'oversized',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV8TcT-aYKI9AQnm6iHdqJTyfrLedg-mNEjxbfP7pSQA&s=10',disc:70,sub:'Oversized Fit'},
+  {id:9,name:'Lion Tee IX',cat:'graphic',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDks3EBjnzrzE32urKFn2COX0kKgTv0MHyjLDb-bdJ_w&s=10',disc:70,sub:'Graphic Collection'},
+  {id:10,name:'Lion Tee X',cat:'minimal',price:50,old:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm60aN0VcjHC6YjoE9khgq8Amp4sbsyZJqOMV-mLVmag&s=10',disc:70,sub:'Minimal Series'},
+];
+let currentCat='all';
+let searchQ=new URLSearchParams(window.location.search).get('q')||'';
+function cardHTML(p){return `<div class="card"><div class="card-img"><img src="${p.img}" alt="${p.name}" loading="lazy">${p.disc?'<span class="badge-disc">−'+p.disc+'%</span>':''}<span class="badge-stock">In Stock</span></div><div class="card-body"><h3>${p.name}</h3><span class="sub">${p.sub}</span><div class="sizes"><button class="size-chip">S</button><button class="size-chip">M</button><button class="size-chip">L</button><button class="size-chip">XL</button></div><div class="card-footer"><span class="price">$${p.price}${p.old?' <span class="old">$'+p.old+'</span>':''}</span><button class="btn-buy" onclick="addCart(${p.id})">Add to Cart</button></div></div></div>`;}
+function render(){
+  let f=products;
+  if(currentCat!=='all') f=f.filter(p=>p.cat===currentCat);
+  if(currentCat==='sale') f=products.filter(p=>p.disc>0);
+  if(searchQ) f=f.filter(p=>p.name.toLowerCase().includes(searchQ.toLowerCase())||p.sub.toLowerCase().includes(searchQ.toLowerCase()));
+  const g=document.getElementById('products-grid');
+  g.innerHTML=f.length?f.map(cardHTML).join(''):'<div class="empty-state" style="grid-column:1/-1"><div style="font-size:48px;margin-bottom:16px">🔍</div><h3>No products found</h3><p>Try a different filter or search term</p></div>';
+  document.getElementById('resultCount').textContent=f.length+' product'+(f.length!==1?'s':'')+' found';
+  g.querySelectorAll('.size-chip').forEach(b=>b.addEventListener('click',function(){this.closest('.sizes').querySelectorAll('.size-chip').forEach(x=>x.classList.remove('selected'));this.classList.add('selected');}));
+}
+document.querySelectorAll('.cat-pill').forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+    currentCat=pill.dataset.cat;
+    document.getElementById('catTitle').textContent=pill.textContent;
+    searchQ='';render();
+  });
+});
+function addCart(id){const c=JSON.parse(localStorage.getItem('thread_cart')||'[]');c.push(id);localStorage.setItem('thread_cart',JSON.stringify(c));showToast('Added to cart! 🛒');document.getElementById('cartDot').style.display='block';}
+function showToast(m){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';document.body.appendChild(t);}t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2000);}
+render();
+</script>
+</body></html>

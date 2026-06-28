@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THREAD — Cart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style2.css">
+<style>
+.cart-layout{display:grid;grid-template-columns:1fr 340px;gap:32px;padding:40px;max-width:1100px;margin:0 auto;align-items:start;}
+.cart-list{display:flex;flex-direction:column;gap:0;}
+.cart-item{display:flex;align-items:center;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);}
+.cart-item img{width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid var(--border);flex-shrink:0;}
+.item-info{flex:1;}
+.item-info h4{font-size:15px;font-weight:600;margin-bottom:4px;}
+.item-info p{font-size:12px;color:var(--muted);}
+.item-price{font-size:16px;font-weight:700;margin-left:16px;}
+.qty-row{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.qty-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--paper);cursor:pointer;font-size:16px;font-weight:500;font-family:var(--font-body);transition:background .15s;}
+.qty-btn:hover{background:var(--border);}
+.qty-val{font-size:14px;font-weight:600;min-width:24px;text-align:center;}
+.remove-btn{margin-left:auto;font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--font-body);}
+.remove-btn:hover{color:var(--red);}
+.summary-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;position:sticky;top:80px;}
+.summary-box h3{font-size:16px;font-weight:600;margin-bottom:24px;}
+.sum-row{display:flex;justify-content:space-between;padding:10px 0;font-size:14px;border-bottom:1px solid var(--border);}
+.sum-row.total{font-weight:700;font-size:17px;border:none;padding-top:18px;}
+.promo-row{display:flex;gap:8px;margin:16px 0;}
+.promo-row input{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:var(--font-body);}
+.promo-row input:focus{border-color:var(--accent);}
+.promo-btn{padding:10px 16px;background:var(--ink);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);}
+@media(max-width:768px){.cart-layout{grid-template-columns:1fr;padding:20px;}}
+</style>
+</head>
+<body>
+<!-- TOP BAR -->
+<div class="topbar">
+  Free shipping on orders over $100 &nbsp;·&nbsp; Code <strong>THREAD20</strong> for 20% off &nbsp;·&nbsp;
+  <a href="products.html">Shop now →</a>
+</div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="home.html" class="nav-logo">THRE<span>A</span>D</a>
+  <div class="nav-links">
+    <a href="home.html"     data-p="home">Home</a>
+    <a href="products.html" data-p="products">Products</a>
+    <a href="about.html"    data-p="about">About</a>
+    <a href="others.html"   data-p="others">Others</a>
+    <a href="login.html"    data-p="login">Login</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:14px"></i>
+      <input type="text" placeholder="Search..." onkeydown="if(event.key==='Enter')window.location='products.html?q='+this.value">
+    </div>
+    <button class="btn-icon" onclick="window.location='cart.html'" title="Cart">
+      <i class="fa-solid fa-bag-shopping" style="font-size:16px"></i>
+      <span class="dot" id="cartDot"></span>
+    </button>
+    <a href="login.html"><button class="btn-login">Login</button></a>
+  </div>
+</nav>
+<script>
+  // highlight active nav link
+  const p = window.location.pathname.split('/').pop().replace('.html','');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    if(a.dataset.p === p) a.classList.add('active');
+  });
+  // show cart dot if cart has items
+  const c = JSON.parse(localStorage.getItem('thread_cart')||'[]');
+  if(c.length) document.getElementById('cartDot').style.display='block';
+</script>
+<div class="page-header"><h1>Your Cart</h1><p id="cartCount">Loading...</p></div>
+<div class="cart-layout">
+  <div class="cart-list" id="cartList"></div>
+  <div class="summary-box" id="summaryBox" style="display:none">
+    <h3>Order Summary</h3>
+    <div class="sum-row"><span>Subtotal</span><span id="subtotal">/bin/sh</span></div>
+    <div class="sum-row"><span>Shipping</span><span style="color:var(--green)">Free</span></div>
+    <div class="promo-row"><input type="text" placeholder="Promo code..."><button class="promo-btn" onclick="showToast('Code applied! 🎉')">Apply</button></div>
+    <div class="sum-row total"><span>Total</span><span id="totalAmt">/bin/sh</span></div>
+    <button class="btn-primary" style="width:100%;margin-top:20px" onclick="showToast('Proceeding to checkout...')">Checkout</button>
+    <a href="products.html" style="display:block;text-align:center;margin-top:14px;font-size:13px;color:var(--muted);">Continue Shopping</a>
+  </div>
+</div>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">THRE<span>A</span>D</div>
+      <p>Premium graphic tees for those who wear their story. New drops every month.</p>
+    </div>
+    <div class="footer-col"><h4>Shop</h4>
+      <a href="products.html">New Arrivals</a>
+      <a href="products.html">Graphic Tees</a>
+      <a href="products.html">Sale</a>
+    </div>
+    <div class="footer-col"><h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="others.html">Others</a>
+      <a href="mailto:h.marady007@gmail.com">Contact</a>
+    </div>
+    <div class="footer-col"><h4>Account</h4>
+      <a href="login.html">Login / Register</a>
+      <a href="cart.html">My Cart</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 THREAD. All rights reserved.</p>
+    <p><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  </div>
+</footer>
+<script>
+const products=[
+  {id:1,name:'Lion Tee I',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJT0HndVRQic7zKpVWG78-6ogeIz1Oe03NrQd60ucHgg&s=10',sub:'Graphic Collection'},
+  {id:2,name:'Lion Tee II',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxE6bpOFti8bORR5hNptIESbxJnaxvuALiPAaPyjqHQ&s=10',sub:'Oversized Fit'},
+  {id:3,name:'Lion Tee III',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSG2z0S5MBSGfnbxgPGNcg9iDNVAefXVC6UEtu7K_DJw&s=10',sub:'Limited Edition'},
+  {id:4,name:'Lion Tee IV',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6xZMTv5A-dpk2JzEcUPCZ85QnXP7zfkIgnenPrzaN7g&s=10',sub:'Oversized Fit'},
+  {id:5,name:'Lion Tee V',price:168,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTknnBrgAansaVcF7JvtiY2VUM--SypBtCMrY59Sepg&s=10',sub:'Minimal Series'},
+  {id:6,name:'Lion Tee VI',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJqr_jFscUBQqESc16KB8LZdGMfSxuqqMpFq71K2Xgig&s=10',sub:'Graphic Collection'},
+  {id:7,name:'Lion Tee VII',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScG0NHfjmg2W7Va1eTPHz64HzXFU8l_N7weYatFinc4Q&s=10',sub:'Limited Edition'},
+  {id:8,name:'Lion Tee VIII',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV8TcT-aYKI9AQnm6iHdqJTyfrLedg-mNEjxbfP7pSQA&s=10',sub:'Oversized Fit'},
+  {id:9,name:'Lion Tee IX',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDks3EBjnzrzE32urKFn2COX0kKgTv0MHyjLDb-bdJ_w&s=10',sub:'Graphic Collection'},
+  {id:10,name:'Lion Tee X',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm60aN0VcjHC6YjoE9khgq8Amp4sbsyZJqOMV-mLVmag&s=10',sub:'Minimal Series'},
+];
+let cart=JSON.parse(localStorage.getItem('thread_cart')||'[]');
+function render(){
+  const list=document.getElementById('cartList');
+  const summary=document.getElementById('summaryBox');
+  const cnt=document.getElementById('cartCount');
+  if(!cart.length){
+    cnt.textContent='0 items';
+    list.innerHTML='<div class="empty-state"><div style="font-size:56px;margin-bottom:16px">🛍️</div><h3>Your cart is empty</h3><p>Go find something awesome</p><a href="products.html"><button class="btn-primary" style="margin-top:20px">Browse Products</button></a></div>';
+    summary.style.display='none'; return;
+  }
+  const grouped={};
+  cart.forEach(id=>{grouped[id]=(grouped[id]||0)+1;});
+  let total=0;
+  list.innerHTML=Object.entries(grouped).map(([id,qty])=>{
+    const p=products.find(x=>x.id==id);
+    if(!p) return '';
+    total+=p.price*qty;
+    return `<div class="cart-item">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="item-info">
+        <h4>${p.name}</h4>
+        <p>${p.sub}</p>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button>
+          <span class="qty-val">${qty}</span>
+          <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
+          <button class="remove-btn" onclick="removeAll(${p.id})">Remove</button>
+        </div>
+      </div>
+      <span class="item-price">$${p.price*qty}</span>
+    </div>`;
+  }).join('');
+  cnt.textContent=cart.length+' item'+(cart.length!==1?'s':'');
+  document.getElementById('subtotal').textContent='$'+total;
+  document.getElementById('totalAmt').textContent='$'+total;
+  summary.style.display='block';
+}
+function changeQty(id,d){
+  if(d<0){const i=cart.indexOf(id);if(i>-1)cart.splice(i,1);}
+  else cart.push(id);
+  localStorage.setItem('thread_cart',JSON.stringify(cart));
+  render();
+}
+function removeAll(id){cart=cart.filter(x=>x!=id);localStorage.setItem('thread_cart',JSON.stringify(cart));render();}
+function showToast(m){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';document.body.appendChild(t);}t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);}
+render();
+</script>
+</body></html>
